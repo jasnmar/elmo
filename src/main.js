@@ -1,14 +1,14 @@
 import './style.css'
 import JSConfetti from 'js-confetti'
 
-const jsConfetti = new JSConfetti()
+
 
 
 //
 
 document.querySelector('#app').innerHTML = `
 <main>
-    <div id="click"></div>
+  <div id="click"></div>
   <div id="head">
     <div id="eyes">
       <div class="eyewrap">
@@ -35,6 +35,7 @@ document.querySelector('#app').innerHTML = `
       <input id="switch" type="checkbox">
       <span class="slider round"></span>
     </label>
+    Mouth
     <div class="control">
       <label for="eye-lr">Eye - Left / Right<label>
       <input id="eye-lr" type="range"></input>
@@ -57,7 +58,6 @@ const eyeudSlider = document.getElementById("eye-ud")
 const mouthSlider = document.getElementById("mouth-input")
 
 eyelrSlider.addEventListener("input", (e) => {
-  console.log('e.target.value: ', e.target.value)
   const eyeball = document.getElementsByClassName('eyeball')
     const lf = e.target.value - 50
     for( let eye of eyeball) {
@@ -66,7 +66,6 @@ eyelrSlider.addEventListener("input", (e) => {
 })
 
 eyeudSlider.addEventListener("input", (e) => {
-  console.log('e.target.value: ', e.target.value)
   const eyeball = document.getElementsByClassName('eyeball')
     const ud = e.target.value
     for( let eye of eyeball) {
@@ -75,15 +74,37 @@ eyeudSlider.addEventListener("input", (e) => {
 })
 
 mouthSlider.addEventListener("input", (e) => {
-  console.log('e.target.value: ', e.target.value)
   const mouth = document.getElementById('mouth')
   const rotate = `rotateX(${e.target.value}deg)`
-  console.log('rotate: ', rotate)
   mouth.style.transform = rotate
 })
 
 partyButton.addEventListener("click", () => {
+  const jsConfetti = new JSConfetti()
   jsConfetti.addConfetti()
+  const eyes = document.getElementsByClassName('eye')
+  for( let eye of eyes) {
+    eye.style.height = "170px"
+    eye.style.width = "160px"
+  }
+  setTimeout(() => {
+    for( let eye of eyes) {
+      eye.style.height = "140px"
+      eye.style.width = "130px"
+    }
+  }, 500);
+  const eyeX = Math.floor(Math.random() * 100) - 50
+  const eyeY = Math.floor(Math.random() * 100)
+  const moPos = Math.floor(Math.random() * 88) * -1
+  const eyeball = document.getElementsByClassName('eyeball')
+  for( let eye of eyeball) {
+    eye.style.top = eyeY.toString() + "px"
+    eye.style.left = eyeX.toString() + "px"
+  } 
+  const mouth = document.getElementById('mouth')
+  const rotate = `rotateX(${moPos}deg)`
+  mouth.style.transform = rotate
+  
 })
 
 const clickDiv = document.getElementById("click")
@@ -104,17 +125,12 @@ if(clickDiv) {
         } 
       } else {
         const offset = ang > 0 ? dist * 45 : -dist * 45
-        console.log('offset: ', offset)
         const openAngle = 45 + offset
         const mouth = document.getElementById('mouth')
         const rotate = `rotateX(${openAngle}deg)`
-        console.log('rotate: ', rotate)
         mouth.style.transform = rotate
       }
     }
-    
-  
-  
   })
 }
 
@@ -159,12 +175,9 @@ function clickConverter(event) {
     console.log('clickDist: ', clickDist)
     console.log('normalizedDistance: ', normalizedDistance)
     console.log('angle: ', angle)
-
-
   }
 
   return [normalizedDistance, angle]
-
 }
 
 function coordsToPosition(x, y) {
