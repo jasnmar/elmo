@@ -10,6 +10,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --color-elmo: red;
+  --color-cookie: blue;
 }
 
 body {
@@ -20,7 +22,7 @@ body {
 }
 
 button {
-  background: red;
+  background:var(--color-elmo);
   padding: 10px;
   color: white;
   border: none;
@@ -29,14 +31,15 @@ button {
 }
 
 #click {
-  position: fixed;
-  height: 500px;
   width: 100vw;
   top: 0px;
   left: 0px;
   z-index: 5;
+  display: block;
 }
-
+.character-btn {
+  margin-top: 10px;
+}
 .contain {
   display: flex;
   flex-wrap: wrap;
@@ -45,12 +48,23 @@ button {
   margin-top: 10px;
 }
 
-#head {
-  background: red;
+.elmo {
+  background: var(--color-elmo);
   border-radius: 50%;
   width: 400px;
   height: 400px;
+}
+
+.cookie {
+  background: var(--color-cookie);
+  border-radius: 50%;
+  width: 400px;
+  height: 250px;
+}
+
+#head {
   box-shadow: 10px 10px 100px black;
+  top: 50px;
 }
 
 #eyes {
@@ -68,10 +82,16 @@ button {
   box-shadow: 10px 10px 15px 0px black;
   border-radius: 50%;
 }
-
-.eye {
+.elmo--eye {
   width: 140px;
   height: 130px;
+}
+.cookie--eye {
+  width: 120px;
+  height: 120px;
+}
+
+.eye {
   background: white;
   border-radius: 50%;
   box-shadow: 0px 0px 0px 5px black;
@@ -94,25 +114,41 @@ button {
   transition-duration: 500ms;
 }
 
-#nose {
-  width: 130px;
-  height: 150px;
+.elmo--nose {
   background: orange;
   border-radius: 50%;
   border: 5px solid black;
   position: relative;
   top: -100px;
   box-shadow: 10px 10px 15px 0px black;
-  transition-duration: 500ms;
 }
 
-#mouth {
+#nose {
+  width: 130px;
+  height: 150px;
+  position: relative;
+  top: -100px;
+  
+  transition-duration: 500ms;
+}
+.elmo--mouth {
   width: 300px;
   height: 140px;
   background: black;
   border-radius: 0 0 150px 150px;
   position: relative;
   top: -100px;
+  transform: rotateX(44deg);
+}
+.cookie--mouth {
+  top: -200px;
+}
+#mouth {
+  width: 300px;
+  height: 140px;
+  background: black;
+  border-radius: 0 0 150px 150px;
+  position: relative;
   transform: rotateX(44deg);
   transition-duration: 500ms;
 }

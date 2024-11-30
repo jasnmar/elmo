@@ -5,8 +5,8 @@ import JSConfetti from 'js-confetti'
 
 document.querySelector('#app').innerHTML = `
 <main>
-  <div id="click"></div>
-  <div id="head">
+  <div id="click">
+  <div id="head" class="elmo">
     <div id="eyes">
       <div class="eyewrap">
         <div class="eye">
@@ -25,6 +25,7 @@ document.querySelector('#app').innerHTML = `
     </div>
     <div id="mouth">
     </div>
+  </div>
   </div>
   <div class="contain">
     Eyes
@@ -46,7 +47,12 @@ document.querySelector('#app').innerHTML = `
       <input id="mouth-input" min=-88 max=0 type="range"></input>
     </div>
     <div class="control">
-    <button id="party">Party</button>
+      <button id="party">Party</button>
+    </div>
+    <div class="control">
+      <button id="elmo" class="character-btn">Elmo</button>
+      <button id="cookie" class="character-btn">Cookie</button>
+    </div>
   </div>
 `
 
@@ -54,10 +60,53 @@ let eyePosLeft = 0
 let eyePosTop = 0
 let mouthOpen = 88
 
+
+
 const partyButton = document.getElementById("party")
 const eyelrSlider = document.getElementById("eye-lr")
 const eyeudSlider = document.getElementById("eye-ud")
 const mouthSlider = document.getElementById("mouth-input")
+const cookieBtn = document.getElementById('cookie')
+const elmoBtn = document.getElementById('elmo')
+
+makeElmo()
+
+
+function makeCookie() {
+  const head = document.getElementById('head')
+  head.classList = ''
+  head.classList.add('cookie')
+  const nose = document.getElementById('nose')
+  nose.classList = ''
+  nose.classList.add('cookie--nose')
+  const mouth = document.getElementById('mouth')
+  mouth.classList = ''
+  mouth.classList.add('cookie--mouth')
+  const eyes = document.getElementsByClassName('eye')
+  for(let eye of eyes) {
+    eye.classList = ''
+    eye.classList.add('eye')
+    eye.classList.add('cookie--eye')
+  }
+}
+
+function makeElmo() {
+  const head = document.getElementById('head')
+  head.classList = ''
+  head.classList.add('elmo')
+  const nose = document.getElementById('nose')
+  nose.classList = ''
+  nose.classList.add('elmo--nose')
+  const mouth = document.getElementById('mouth')
+  mouth.classList = ''
+  mouth.classList.add('elmo--mouth')
+  const eyes = document.getElementsByClassName('eye')
+  for(let eye of eyes) {
+    eye.classList = ''
+    eye.classList.add('eye')
+    eye.classList.add('elmo--eye')
+  }
+}
 
 function updateEyeLeft(left) {
   eyePosLeft = left
@@ -90,6 +139,16 @@ function updateMouth(opening) {
   }
 }
 
+cookieBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+  makeCookie()
+})
+
+elmoBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+  makeElmo()
+})
+
 
 eyelrSlider.addEventListener("input", (e) => {
   const lf = e.target.value - 50
@@ -111,8 +170,10 @@ partyButton.addEventListener("click", () => {
   jsConfetti.addConfetti()
 
   const nose = document.getElementById('nose')
-  nose.style.height = "200px"
-  nose.style.width = "200px"
+  if(nose.classList.contains('elmo--nose')) {
+    nose.style.height = "200px"
+    nose.style.width = "200px"  
+  }
 
   const eyes = document.getElementsByClassName('eye')
   for( let eye of eyes) {
