@@ -1,9 +1,6 @@
 import './style.css'
 import JSConfetti from 'js-confetti'
 
-
-
-
 //
 
 document.querySelector('#app').innerHTML = `
@@ -52,42 +49,80 @@ document.querySelector('#app').innerHTML = `
     <button id="party">Party</button>
   </div>
 `
+
+let eyePosLeft = 0
+let eyePosTop = 0
+let mouthOpen = 88
+
 const partyButton = document.getElementById("party")
 const eyelrSlider = document.getElementById("eye-lr")
 const eyeudSlider = document.getElementById("eye-ud")
 const mouthSlider = document.getElementById("mouth-input")
 
+function updateEyeLeft(left) {
+  eyePosLeft = left
+  eyelrSlider.value = left+50
+  const eyes = document.getElementsByClassName('eyeball')
+  if(eyes) {
+    for(let eye of eyes) {
+      eye.style.left = eyePosLeft.toString() + "px"
+    }
+  }
+}
+
+function updateEyeTop(top) {
+  eyePosTop = top
+  eyeudSlider.value = top
+  const eyes = document.getElementsByClassName('eyeball')
+  if(eyes) {
+    for(let eye of eyes) {
+      eye.style.top = eyePosTop.toString() + "px"
+    }
+  }
+}
+
+function updateMouth(opening) {
+  mouthOpen = opening
+  mouthSlider.value = opening
+  const mouth = document.getElementById('mouth')
+  if(mouth) {
+    mouth.style.transform = `rotateX(${opening}deg)`
+  }
+}
+
+
 eyelrSlider.addEventListener("input", (e) => {
-  const eyeball = document.getElementsByClassName('eyeball')
-    const lf = e.target.value - 50
-    for( let eye of eyeball) {
-      eye.style.left = lf.toString() + "px"
-    } 
+  const lf = e.target.value - 50
+  updateEyeLeft(lf) 
 })
 
 eyeudSlider.addEventListener("input", (e) => {
-  const eyeball = document.getElementsByClassName('eyeball')
-    const ud = e.target.value
-    for( let eye of eyeball) {
-      eye.style.top = ud.toString() + "px"
-    } 
+  const ud = e.target.value
+  updateEyeTop(ud)
 })
 
 mouthSlider.addEventListener("input", (e) => {
-  const mouth = document.getElementById('mouth')
-  const rotate = `rotateX(${e.target.value}deg)`
-  mouth.style.transform = rotate
+  const rotate = e.target.value
+  updateMouth(rotate)
 })
 
 partyButton.addEventListener("click", () => {
   const jsConfetti = new JSConfetti()
   jsConfetti.addConfetti()
+
+  const nose = document.getElementById('nose')
+  nose.style.height = "200px"
+  nose.style.width = "200px"
+
   const eyes = document.getElementsByClassName('eye')
   for( let eye of eyes) {
     eye.style.height = "170px"
     eye.style.width = "160px"
+
   }
   setTimeout(() => {
+    nose.style.width = "130px"
+    nose.style.height= "150px"
     for( let eye of eyes) {
       eye.style.height = "140px"
       eye.style.width = "130px"
@@ -96,14 +131,9 @@ partyButton.addEventListener("click", () => {
   const eyeX = Math.floor(Math.random() * 100) - 50
   const eyeY = Math.floor(Math.random() * 100)
   const moPos = Math.floor(Math.random() * 88) * -1
-  const eyeball = document.getElementsByClassName('eyeball')
-  for( let eye of eyeball) {
-    eye.style.top = eyeY.toString() + "px"
-    eye.style.left = eyeX.toString() + "px"
-  } 
-  const mouth = document.getElementById('mouth')
-  const rotate = `rotateX(${moPos}deg)`
-  mouth.style.transform = rotate
+  updateEyeLeft(eyeX)
+  updateEyeTop(eyeY)
+  updateMouth(moPos)
   
 })
 
@@ -114,21 +144,16 @@ if(clickDiv) {
     const [dist, ang] = clickConverter(e)
     if(checkBox) {
       if(checkBox.checked==false){
-      
         const eyeball = document.getElementsByClassName('eyeball')
         const offsetDistance = 50 * dist
-        for( let eye of eyeball) {
-          const tp = -Math.sin(ang) * offsetDistance + 50
-          const lf = Math.cos(ang) * offsetDistance
-          eye.style.top = tp.toString() + "px"
-          eye.style.left = lf.toString() + "px"
-        } 
+        const tp = -Math.sin(ang) * offsetDistance + 50
+        const lf = Math.cos(ang) * offsetDistance
+        updateEyeLeft(lf)
+        updateEyeTop(tp)
       } else {
         const offset = ang > 0 ? dist * 45 : -dist * 45
         const openAngle = 45 + offset
-        const mouth = document.getElementById('mouth')
-        const rotate = `rotateX(${openAngle}deg)`
-        mouth.style.transform = rotate
+        updateMouth(-openAngle)
       }
     }
   })
