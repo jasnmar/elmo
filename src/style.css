@@ -14,6 +14,14 @@
   --color-cookie: blue;
 }
 
+.cookie-color{
+  background: var(--color-cookie)
+}
+
+.elmo-color {
+  background: var(--color-elmo)
+}
+
 body {
   margin-top: 100px;
   display: flex;
