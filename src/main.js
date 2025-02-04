@@ -1,65 +1,11 @@
 import './style.css'
 import JSConfetti from 'js-confetti'
 
-//
-
-document.querySelector('#app').innerHTML = `
-<main>
-  <div id="click">
-  <div id="head" class="elmo">
-    <div id="eyes">
-      <div class="eyewrap">
-        <div class="eye">
-          <div class="eyeball">
-          </div>
-        </div>
-      </div>
-      <div class="eyewrap">
-        <div class="eye">
-          <div class="eyeball">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="nose">
-    </div>
-    <div id="mouth">
-    </div>
-  </div>
-  </div>
-  <div class="contain">
-    Eyes
-    <label class="switch" for="switch">
-      <input id="switch" type="checkbox">
-      <span class="slider round"></span>
-    </label>
-    Mouth
-    <div class="control">
-      <label for="eye-lr">Eye - Left / Right<label>
-      <input id="eye-lr" type="range"></input>
-    </div>
-    <div class="control">
-      <label for="eye-ud">Eye - Up / Down<label>
-      <input id="eye-ud" type="range"></input>
-    </div>
-    <div class="control">
-      <label for="mouth-input">Mouth<label>
-      <input id="mouth-input" min=-88 max=0 type="range"></input>
-    </div>
-    <div class="control">
-      <button id="party">Party</button>
-    </div>
-    <div class="control">
-      <button id="elmo" class="character-btn">Elmo</button>
-      <button id="cookie" class="character-btn cookie-color">Cookie</button>
-    </div>
-  </div>
-`
-
 //State management
 let eyePosLeft = 0
 let eyePosTop = 0
 let mouthOpen = 88
+let cCharacter = "elmo"
 
 
 //UI Elements
@@ -139,33 +85,17 @@ partyButton.addEventListener("click", () => {
 
 //Start with Elmo
 makeElmo()
+// makeAbby()
 
 
-function makeCookie() {
-  const head = document.getElementById('head')
-  head.classList = ''
-  head.classList.add('cookie')
-  const nose = document.getElementById('nose')
-  nose.classList = ''
-  nose.classList.add('cookie--nose')
-  const mouth = document.getElementById('mouth')
-  mouth.classList = ''
-  mouth.classList.add('cookie--mouth')
-  const eyes = document.getElementsByClassName('eye')
-  for(let eye of eyes) {
-    eye.classList = ''
-    eye.classList.add('eye')
-    eye.classList.add('cookie--eye')
-  }
-  const partyButton = document.getElementById('party')
-  partyButton.classList.add('cookie-color')
-  partyButton.classList.remove('elmo-color')
-}
+//Characters
 
 function makeElmo() {
+  cCharacter = "elmo"
   const head = document.getElementById('head')
   head.classList = ''
   head.classList.add('elmo')
+  head.classList.add('head-shadow')
   const nose = document.getElementById('nose')
   nose.classList = ''
   nose.classList.add('elmo--nose')
@@ -183,6 +113,93 @@ function makeElmo() {
   partyButton.classList.remove('cookie-color')
 }
 
+function makeCookie() {
+  cCharacter = "cookie"
+  const head = document.getElementById('head')
+  head.classList = ''
+  head.classList.add('cookie')
+  head.classList.add('head-shadow')
+  const nose = document.getElementById('nose')
+  nose.classList = ''
+  nose.classList.add('cookie--nose')
+  const mouth = document.getElementById('mouth')
+  mouth.classList = ''
+  mouth.classList.add('cookie--mouth')
+  const eyes = document.getElementsByClassName('eye')
+  for(let eye of eyes) {
+    eye.classList = ''
+    eye.classList.add('eye')
+    eye.classList.add('cookie--eye')
+  }
+  const partyButton = document.getElementById('party')
+  partyButton.classList.add('cookie-color')
+  partyButton.classList.remove('elmo-color')
+}
+
+//
+
+function setCharacterSize() {
+  const docWidth = document.body.clientWidth
+  let width = 600
+  console.log('docWidth: ', docWidth)
+  if(docWidth < 600) {
+    width = docWidth * 0.9
+  }
+  const height = width
+  return {width, height}
+}
+
+function makeAbby() {
+  cCharacter = "abby"
+  destroyCharacter()
+  const charDims = setCharacterSize()
+  const characterWidth = charDims.width + 'px'
+  const head = document.getElementById('head')
+  head.classList = ''
+  head.classList.add('head-center-img')
+  //Main Background 
+  head.style.backgroundImage = 'url(images/Abby.svg)'
+  head.style.backgroundSize = 'contain'
+  head.style.backgroundRepeat = 'no-repeat'
+  head.style.width = characterWidth
+  head.style.height = characterWidth
+
+  //Eyes
+  const rightEyeBall = document.createElement('div')
+  rightEyeBall.classList.add('eyeball')
+  const leftEyeBall = document.createElement('div')
+  leftEyeBall.classList.add('eyeball')
+  const rightEye = document.createElement('div')
+  rightEye.classList.add('eye')
+  rightEye.id = 'eye'
+  rightEye.classList.add('abby--eye')
+  const leftEye = document.createElement('div')
+  leftEye.classList.add('eye')
+  leftEye.classList.add('abby--eye')
+  const rightEyeWrap = document.createElement('div')
+  rightEyeWrap.classList.add('eyewrap')
+  const leftEyeWrap = document.createElement('div')
+  leftEyeWrap.classList.add('eyewrap')
+  const eyes = document.createElement('div')
+  eyes.id = 'eyes'
+  eyes.classList.add('abby--eye')
+  eyes.style.top = charDims.height * .35 + 'px'
+  rightEye.appendChild(rightEyeBall)
+  leftEye.appendChild(leftEyeBall)
+  rightEyeWrap.appendChild(rightEye)
+  leftEyeWrap.appendChild(leftEye)
+  eyes.appendChild(rightEye)
+  eyes.appendChild(leftEye)
+  head.appendChild(eyes)
+
+}
+
+//General utility items
+
+function destroyCharacter() {
+  const head = document.getElementById('head')
+  head.innerHTML = ''
+}
 
 //Utility functions that actually update the character features
 
@@ -222,14 +239,20 @@ function updateMouth(opening) {
 const clickDiv = document.getElementById("click")
 if(clickDiv) {
   clickDiv.addEventListener("click", (e) => {
+    console.log('e: ', e.target)
+    console.log('e.target.style.z-index: ', e.target.style.zIndex)
     const checkBox = document.getElementById('switch')
     const [dist, ang] = clickConverter(e)
     if(checkBox) {
       if(checkBox.checked==false){
         const eyeball = document.getElementsByClassName('eyeball')
-        const offsetDistance = 50 * dist
-        const tp = -Math.sin(ang) * offsetDistance + 50
-        const lf = Math.cos(ang) * offsetDistance
+        const eye = document.getElementById('eye')
+        const eyeHeight = eye.clientHeight / 2
+        const eyeWidth = eye.clientWidth / 2
+        const vOffsetDistance = eyeHeight * dist
+        const hOffsetDistance = eyeWidth * dist
+        const tp = -Math.sin(ang) * vOffsetDistance + 50
+        const lf = Math.cos(ang) * hOffsetDistance
         updateEyeLeft(lf)
         updateEyeTop(tp)
       } else {
@@ -247,15 +270,17 @@ if(clickDiv) {
 function clickConverter(event) {
   const debug = true
 
-  //What element was clicked?
-  const parentElement = event.target
-
+  const clickDiv = document.getElementById('click')
   //Click coordinates
   const x = event.clientX
-  const y = event.clientY
+  let y = event.clientY
   //Size of element clicked
-  const w = parentElement.offsetWidth
-  const h = parentElement.offsetHeight
+  const w = clickDiv.offsetWidth
+  const h = clickDiv.offsetHeight
+  const cDivBox = clickDiv.getBoundingClientRect()
+  const cDivTop = cDivBox.top
+  const cDivBot = cDivBox.left
+  y = y - cDivTop
   //Coordinates at the center of the element clicked
   const cX = w / 2
   const cY = h / 2

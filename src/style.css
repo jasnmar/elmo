@@ -12,6 +12,19 @@
   -moz-osx-font-smoothing: grayscale;
   --color-elmo: red;
   --color-cookie: blue;
+  --color-abby: pink;
+}
+
+body {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.characters {
+  display: flex;
+  gap: 10px;
 }
 
 .cookie-color{
@@ -22,16 +35,13 @@
   background: var(--color-elmo)
 }
 
-body {
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.abby-color {
+  background: var(--color-abby)
 }
 
 button {
   background:var(--color-elmo);
-  padding: 10px;
+  padding: 20px;
   color: white;
   border: none;
   font-weight: bold;
@@ -40,14 +50,18 @@ button {
 
 #click {
   width: 100vw;
+  height: 500px;
   top: 0px;
   left: 0px;
-  z-index: 5;
+  position: absolute;
+  /* background: rgba(255,0,0,0.5); */
   display: block;
 }
+
 .character-btn {
   margin-top: 10px;
 }
+
 .contain {
   display: flex;
   flex-wrap: wrap;
@@ -63,6 +77,17 @@ button {
   height: 400px;
 }
 
+.abbyMain {
+  margin: 0 auto;
+  filter: drop-shadow(10px 10px 100px black);
+}
+
+.head-center-img {
+  margin: 0 auto;
+  width: 100vw;
+  text-align: center;
+}
+
 .cookie {
   background: var(--color-cookie);
   border-radius: 50%;
@@ -70,14 +95,20 @@ button {
   height: 250px;
 }
 
-#head {
+.abby {
+  background: var(--color-abby);
+  border-radius: 50%;
+  width: 300px;
+  height: 250px;
+}
+
+.head-shadow {
   box-shadow: 10px 10px 100px black;
   top: 50px;
 }
 
 #eyes {
   position: relative;
-  margin: 0 auto;
   display: flex;
   flex-direction: row;
   background: none;
@@ -90,19 +121,28 @@ button {
   box-shadow: 10px 10px 15px 0px black;
   border-radius: 50%;
 }
+
+.abby--eye {
+  width: 120px;
+  height: 90px;
+  position: relative;
+}
+
 .elmo--eye {
   width: 140px;
   height: 130px;
+  box-shadow: 0px 0px 0px 5px black;
+  background: white;
 }
 .cookie--eye {
   width: 120px;
   height: 120px;
+  box-shadow: 0px 0px 0px 5px black;
+  background: white;
 }
 
 .eye {
-  background: white;
   border-radius: 50%;
-  box-shadow: 0px 0px 0px 5px black;
   transition-duration: 500ms;
 }
 
