@@ -2,11 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Betty's Elmo</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <main>
+        <div id="click">
+        </div>
+          <div id="head" class="elmo head">
+            <div id="eyes">
+              <div class="eyewrap">
+                <div id="eye" class="eye">
+                  <div class="eyeball">
+                  </div>
+                </div>
+              </div>
+              <div class="eyewrap">
+                <div class="eye">
+                  <div class="eyeball">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="nose">
+            </div>
+            <div id="mouth">
+            </div>
+          </div>
+        <div class="contain">
+          Eyes
+          <label class="switch" for="switch">
+            <input id="switch" type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          Mouth
+          <div class="control">
+            <label for="eye-lr">Eye - Left / Right<label>
+            <input id="eye-lr" type="range"></input>
+          </div>
+          <div class="control">
+            <label for="eye-ud">Eye - Up / Down<label>
+            <input id="eye-ud" type="range"></input>
+          </div>
+          <div class="control">
+            <label for="mouth-input">Mouth<label>
+            <input id="mouth-input" min=-88 max=0 type="range"></input>
+          </div>
+          <div class="control">
+            <button id="party">Party</button>
+          </div>
+          <div class="characters">
+            <button id="elmo" class="character-btn">Elmo</button>
+            <button id="cookie" class="character-btn cookie-color">Cookie</button>
+          </div>
+        </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
