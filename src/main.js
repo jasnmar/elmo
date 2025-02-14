@@ -90,64 +90,55 @@ makeElmo()
 
 //Characters
 
-function makeElmo() {
+function makeBasicCharacter(character){
+  destroyCharacter()
   cCharacter = "elmo"
   const head = document.getElementById('head')
   head.classList = ''
-  head.classList.add('elmo')
+  head.classList.add(character)
   head.classList.add('head-shadow')
-  const nose = document.getElementById('nose')
-  nose.classList = ''
-  nose.classList.add('elmo--nose')
-  const mouth = document.getElementById('mouth')
-  mouth.classList = ''
-  mouth.classList.add('elmo--mouth')
-  const eyes = document.getElementsByClassName('eye')
-  for(let eye of eyes) {
-    eye.classList = ''
+  const eyes = document.createElement('div')
+  eyes.id = "eyes"
+  head.appendChild(eyes)
+  for( let i=0; i<2; i++){
+    const eyewrap = document.createElement('div')
+    eyewrap.classList.add('eyewrap')
+    const eye = document.createElement('div')
     eye.classList.add('eye')
-    eye.classList.add('elmo--eye')
+    const eyeClass = character+"--eye"
+    eye.classList.add(eyeClass)
+    const eyeball = document.createElement('div')
+    eyeball.classList.add('eyeball')
+    eye.appendChild(eyeball)
+    eyewrap.appendChild(eye)
+    eyes.appendChild(eyewrap)
   }
+  const nose = document.createElement('div')
+  nose.id = 'nose'
+  nose.classList = ''
+  const noseClass = character+'--nose'
+  nose.classList.add(noseClass)
+  head.appendChild(nose)
+  const mouth = document.createElement('div')
+  mouth.id = 'mouth'
+  mouth.classList = ''
+  const mouthclass = character+'--mouth'
+  mouth.classList.add(mouthclass)
+  head.appendChild(mouth)
   const partyButton = document.getElementById('party')
-  partyButton.classList.add('elmo-color')
-  partyButton.classList.remove('cookie-color')
+  partyButton.classList = ''
+  const partyClass = character+'-color'
+  partyButton.classList.add(partyClass)
+}
+
+function makeElmo() {
+  makeBasicCharacter('elmo')
 }
 
 function makeCookie() {
-  cCharacter = "cookie"
-  const head = document.getElementById('head')
-  head.classList = ''
-  head.classList.add('cookie')
-  head.classList.add('head-shadow')
-  const nose = document.getElementById('nose')
-  nose.classList = ''
-  nose.classList.add('cookie--nose')
-  const mouth = document.getElementById('mouth')
-  mouth.classList = ''
-  mouth.classList.add('cookie--mouth')
-  const eyes = document.getElementsByClassName('eye')
-  for(let eye of eyes) {
-    eye.classList = ''
-    eye.classList.add('eye')
-    eye.classList.add('cookie--eye')
-  }
-  const partyButton = document.getElementById('party')
-  partyButton.classList.add('cookie-color')
-  partyButton.classList.remove('elmo-color')
+  makeBasicCharacter('cookie')
 }
 
-//
-
-function setCharacterSize() {
-  const docWidth = document.body.clientWidth
-  let width = 600
-  console.log('docWidth: ', docWidth)
-  if(docWidth < 600) {
-    width = docWidth * 0.9
-  }
-  const height = width
-  return {width, height}
-}
 
 function makeAbby() {
   cCharacter = "abby"
@@ -193,11 +184,26 @@ function makeAbby() {
   head.appendChild(eyes)
 
 }
+//
+
+function setCharacterSize() {
+  const docWidth = document.body.clientWidth
+  let width = 600
+  console.log('docWidth: ', docWidth)
+  if(docWidth < 600) {
+    width = docWidth * 0.9
+  }
+  const height = width
+  return {width, height}
+}
+
+
 
 //General utility items
 
 function destroyCharacter() {
   const head = document.getElementById('head')
+  head.style = ''
   head.innerHTML = ''
 }
 
@@ -246,7 +252,7 @@ if(clickDiv) {
     if(checkBox) {
       if(checkBox.checked==false){
         const eyeball = document.getElementsByClassName('eyeball')
-        const eye = document.getElementById('eye')
+        const eye = document.getElementsByClassName('eye')[0]
         const eyeHeight = eye.clientHeight / 2
         const eyeWidth = eye.clientWidth / 2
         const vOffsetDistance = eyeHeight * dist
